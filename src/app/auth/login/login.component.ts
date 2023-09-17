@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { Subscription } from 'rxjs';
 import { LoginRequest } from 'src/app/models/auth/loginRequest.model';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { SesionUsuarioService } from 'src/app/services/compartido/sesion-usuario.service';
 
 @Component({
   selector: 'app-login',
@@ -10,9 +12,12 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 })
 export class LoginComponent {
 
+  private suscripciones: Subscription[] = new Array();
+
   constructor(
     private _formBuilder: FormBuilder,
-    private _auth: AuthService
+    private _auth: AuthService,
+    private _sesionUsuario: SesionUsuarioService
   ){}
 
   loginForm = this._formBuilder.group({
@@ -29,13 +34,19 @@ export class LoginComponent {
   }
 
   login(){
-    this._auth.login(this.loginForm.value as LoginRequest).subscribe({
-      next: (data: any) => {
-        console.log(data)
-      },
-      error: (errorData) => {
-        console.log(errorData)
-      }
-    })
+    this.suscripciones.push(
+      this._auth.login(this.loginForm.value as LoginRequest).subscribe({
+        next: (data: any) => {
+          console.log(data);
+          this._sesionUsuario.crearCookie(data.token);
+        },
+        error: (errorData) => {
+          console.log(errorData)
+        },
+        complete: () => {
+          this._sesionUsuario.borrarCookie()
+        }
+      })
+    )
   }
 }
