@@ -1,0 +1,22 @@
+<div id="bodyContent">
+    <div class="wrapper">
+      <!-- Sidebar -->
+      <app-menu-lateral></app-menu-lateral>
+      <!-- Main Component -->
+      <div class="main">
+          <nav class="avbar navbar-expand px-3 border-bottom">
+              <!-- Button for sidebar toggle -->
+              <button class="btn" type="button" data-bs-theme="dark" (click)="clickBtnToggle()">
+                  <span class="navbar-toggler-icon"></span>
+              </button>
+          </nav>
+          <main class="content px-3 py-2">
+              <div class="caontainer-fluid">
+                  <!-- <div class="mb-3"></div> -->
+                  <!-- <h3>Bootstrap Slider</h3> -->
+                  <router-outlet></router-outlet>
+              </div>
+          </main>
+      </div>
+    </div>
+  </div>

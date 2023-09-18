@@ -7,11 +7,19 @@ import { LoginComponent } from './auth/login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HomeLayoutComponent } from './layouts/home-layout/home-layout.component';
+import { MenuLateralComponent } from './components/compartido/menu-lateral/menu-lateral.component';
+import { PiePaginaComponent } from './components/compartido/pie-pagina/pie-pagina.component';
+import { InicioComponent } from './components/compartido/inicio/inicio.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    HomeLayoutComponent,
+    MenuLateralComponent,
+    PiePaginaComponent,
+    InicioComponent
   ],
   imports: [
     BrowserModule,

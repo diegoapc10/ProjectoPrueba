@@ -1,0 +1,31 @@
+<aside id="sidebar">
+    <div class="h-100">
+      <div class="sidebar-logo">
+        <a routerLink="">
+          <i class="fa-solid fa-circle-user"></i>
+          {{usuario.rolNombre }}
+        </a>
+      </div>
+      <!-- Sidebar Navigation -->
+      <ul class="sidebar-nav">
+        <li class="sidebar-header">
+          {{usuario.nombreCompleto}}
+        </li>
+        <li *ngFor="let modulo of usuario.modulos" class="sidebar-item">
+          <a href="#" class="sidebar-link collapsed" data-bs-toggle="collapse" [attr.data-bs-target]="'#' + modulo.nombre"
+            aria-expanded="false" [attr.aria-controls]="modulo.nombre">
+            <i class="{{modulo.claseIcono}}"></i>
+            {{modulo.nombre}}
+          </a>
+          <ul id="{{modulo.nombre}}" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+            <li *ngFor="let vista of modulo.vistas" class="sidebar-item">
+              <a [routerLink]="vista.url" class="sidebar-sub-link">
+                <i class="{{modulo.url+'/'+vista.claseIcono}}"></i>
+                {{vista.nombre}}
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </aside>
