@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { UsuarioLogin } from 'src/app/models/usuario/usuario-login.model';
+import { SesionUsuarioService } from 'src/app/services/compartido/sesion-usuario.service';
 
 
 @Component({
@@ -9,12 +11,20 @@ import { UsuarioLogin } from 'src/app/models/usuario/usuario-login.model';
 })
 export class MenuLateralComponent {
 
-  usuario: UsuarioLogin;
+  usuario: any;
 
-  constructor(){}
+  constructor(
+    private _sesionService: SesionUsuarioService,
+    private _router: Router
+    ){}
 
   ngOnInit(){
-    this.usuario = JSON.parse(localStorage.getItem('usuario') ?? "");
+    this.usuario = this._sesionService.setUsuario();
+  }
+
+  logOut(){
+    this._sesionService.borrarDatosLoginStorage();
+    this._router.navigateByUrl('login');
   }
 
 }

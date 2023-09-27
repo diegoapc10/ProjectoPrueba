@@ -1,3 +1,4 @@
 export const environment = {
-    AuthenticationService: ''
+    AuthenticationService: '',
+    TipoDocumentoService: ''
 };

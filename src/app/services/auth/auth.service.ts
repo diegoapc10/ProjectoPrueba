@@ -13,21 +13,20 @@ import { SesionUsuarioService } from '../compartido/sesion-usuario.service';
 export class AuthService {
 
   urlAuthApi : string = "";
-  authController: string = endPointAuth.apiAuth.apiController;
+  authApi: any = endPointAuth.apiAuth;
+  authController: string = '';
 
   constructor(
     private _consultaApi: ConsultaApisService,
     private _sesionUsuario: SesionUsuarioService
     ) { 
     this.urlAuthApi = environment.AuthenticationService;
+    this.authController = this.authApi.apiController;
   }
 
   login(request: LoginRequest): Observable<any>{
-    let urlCompleta = `${this.urlAuthApi}${this.authController}/Login`;
-    return this._consultaApi.cosumoApiGet<any>(urlCompleta, request);
-  }
-
-  logOut(){
-    this._sesionUsuario.borrarDatosLoginStorage();
+    const endPoint = this.authApi.login;
+    const urlCompleta = `${this.urlAuthApi}${this.authController}/${endPoint}`;
+    return this._consultaApi.consumoApiGet<any>(urlCompleta, request);
   }
 }

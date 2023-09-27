@@ -11,6 +11,12 @@
         <li class="sidebar-header">
           {{usuario.nombreCompleto}}
         </li>
+        <li class="sidebar-header">
+          <a role="button" (click)="logOut()">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            Salir
+          </a>
+        </li>
         <li *ngFor="let modulo of usuario.modulos" class="sidebar-item">
           <a href="#" class="sidebar-link collapsed" data-bs-toggle="collapse" [attr.data-bs-target]="'#' + modulo.nombre"
             aria-expanded="false" [attr.aria-controls]="modulo.nombre">
@@ -19,8 +25,8 @@
           </a>
           <ul id="{{modulo.nombre}}" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
             <li *ngFor="let vista of modulo.vistas" class="sidebar-item">
-              <a [routerLink]="vista.url" class="sidebar-sub-link">
-                <i class="{{modulo.url+'/'+vista.claseIcono}}"></i>
+              <a [routerLink]="modulo.url+'/'+vista.url" class="sidebar-sub-link">
+                <i class="{{vista.claseIcono}}"></i>
                 {{vista.nombre}}
               </a>
             </li>

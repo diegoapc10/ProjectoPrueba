@@ -1,0 +1,65 @@
+<div class="container">
+  <div class="card border-dark">
+    <div class="card-header">
+      Tipos de documentos de Identidad
+    </div>
+    <div class="card-body">
+      <form [formGroup]="tipoDocumentoIdentidadform" (submit)="grabarTipoDocumentoIdentidad()" autocomplete="off">
+        <div class="row mb-3">
+          <label for="nombre" class="col-sm-2 col-form-label"><strong>Nombre</strong></label>
+          <div class="col-sm-5">
+            <input formControlName="nombre" type="text" class="form-control" id="nombre" [autocomplete]="false" [readOnly]="!controles" >
+          </div>
+          <div *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)" class="row">
+            <div class="text-danger">
+              <div *ngIf="nombre.errors?.['required']">
+                <strong>El nombre es obligatorio</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <label for="descripcion" class="col-sm-2 col-form-label"><strong>Descripción</strong></label>
+          <div class="col-sm-5">
+            <input formControlName="descripcion" type="text" class="form-control" id="descripcion" [autocomplete]="false" [readOnly]="!controles">
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="btn-group" role="group">
+            <button type="button" class="btn btn-secondary" (click)="nuevo()">Nuevo</button>
+            <button type="submit" class="btn btn-success">Grabar</button>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <p class="card-title">
+            <strong>Listado</strong>
+          </p>
+        </div>
+        <div class="row">
+          <div class="table-responsive">
+            <table class="table table-hover table-bordered table-sm">
+              <thead>
+                <tr>
+                  <th scope="col" class="text-center">ID</th>
+                  <th scope="col">Nombre</th>
+                  <th scope="col">Descripción</th>
+                  <th scope="col"></th>
+                </tr>
+              </thead>
+              <tbody *ngIf="bodyTable" class="table-group-divider">
+                <tr *ngFor="let item of tiposDocumentoIdentidad" >
+                  <th scope="row" class="text-center">{{item.id}}</th>
+                  <td>{{item.nombre}}</td>
+                  <td>{{item.descripcion}}</td>
+                  <td><button type="button" class="btn btn-dark btn-sm" (click)="editar(item)"><i class="fa-solid fa-pen-to-square"></i></button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "ball-clip-rotate-multiple" [fullScreen] = "true"><p style="color: white" > Loading... </p></ngx-spinner>

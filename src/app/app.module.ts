@@ -11,6 +11,7 @@ import { HomeLayoutComponent } from './layouts/home-layout/home-layout.component
 import { MenuLateralComponent } from './components/compartido/menu-lateral/menu-lateral.component';
 import { PiePaginaComponent } from './components/compartido/pie-pagina/pie-pagina.component';
 import { InicioComponent } from './components/compartido/inicio/inicio.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { InicioComponent } from './components/compartido/inicio/inicio.component
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    NgxSpinnerModule
   ],
   providers: [],
   bootstrap: [AppComponent]

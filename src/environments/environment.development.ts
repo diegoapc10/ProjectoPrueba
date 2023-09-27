@@ -1,3 +1,4 @@
 export const environment = {
-    AuthenticationService: 'http://localhost:5071/'
+    AuthenticationService: 'http://localhost:5071/',
+    TipoDocumentoService: 'http://localhost:5071/'
 };
