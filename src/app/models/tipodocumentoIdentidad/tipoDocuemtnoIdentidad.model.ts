@@ -5,6 +5,7 @@ export interface TipoDocumentoIdentidad{
 }
 
 export interface TipoDocumentoIdentidadRequest{
+    id: number;
     nombre: string;
     descripcion: string;
     usuarioRegistro: number;

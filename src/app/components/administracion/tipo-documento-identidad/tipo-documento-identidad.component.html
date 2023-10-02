@@ -5,6 +5,9 @@
     </div>
     <div class="card-body">
       <form [formGroup]="tipoDocumentoIdentidadform" (submit)="grabarTipoDocumentoIdentidad()" autocomplete="off">
+        <div class="col-sm-3">
+          <input type="number" formControlName="id" id="id" [hidden]="true">
+        </div>
         <div class="row mb-3">
           <label for="nombre" class="col-sm-2 col-form-label"><strong>Nombre</strong></label>
           <div class="col-sm-5">
@@ -44,6 +47,7 @@
                   <th scope="col">Nombre</th>
                   <th scope="col">Descripción</th>
                   <th scope="col"></th>
+                  <th scope="col"></th>
                 </tr>
               </thead>
               <tbody *ngIf="bodyTable" class="table-group-divider">
@@ -52,6 +56,7 @@
                   <td>{{item.nombre}}</td>
                   <td>{{item.descripcion}}</td>
                   <td><button type="button" class="btn btn-dark btn-sm" (click)="editar(item)"><i class="fa-solid fa-pen-to-square"></i></button></td>
+                  <td><button type="button" class="btn btn-danger btn-sm" (click)="eliminar(item)"><i class="fa-regular fa-trash-can"></i></button></td>
                 </tr>
               </tbody>
             </table>

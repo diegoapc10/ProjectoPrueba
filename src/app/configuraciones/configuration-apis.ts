@@ -9,6 +9,16 @@ export const endPointTipoDocumentoIdentidad = {
     apiTipoDocumentoIdentidad: {
         apiController: 'api/TipoDocumentoIdentidad',
         obtenerTiposDocumentoIdentidad: 'ObtenerTiposDocumentoIdentidad',
-        registrarTipoDocumento: 'RegistrarTipoDocumento'
+        registrarTipoDocumento: 'RegistrarTipoDocumento',
+        modificarTipoDocumentoIdentidad: 'ModificarTipoDocumentoIdentidad',
+        eliminarTipoDocumentoIdentidad: 'EliminarTipoDocumentoIdentidad'
+    }
+}
+
+export const endPointRol = {
+    apiRol: {
+        apiController: 'api/Rol',
+        obtenerRoles: 'ObtenerRoles',
+        registrarRol: 'RegistrarRol'
     }
 }

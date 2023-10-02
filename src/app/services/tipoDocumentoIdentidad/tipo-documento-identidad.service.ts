@@ -33,4 +33,16 @@ export class TipoDocumentoIdentidadService {
     const urlCompleta = `${this.urlTdi}${this.tdiController}/${endPoint}`;
     return this._consultaApi.consumoApiPost<TipoDocumentoIdentidad>(urlCompleta, data);
   }
+
+  modificarTipoDocumentoIdentidad(data: TipoDocumentoIdentidadRequest) : Observable<TipoDocumentoIdentidad> {
+    const endPoint = this.tdiApi.modificarTipoDocumentoIdentidad;
+    const urlCompleta = `${this.urlTdi}${this.tdiController}/${endPoint}`;
+    return this._consultaApi.consumoApiPut<TipoDocumentoIdentidad>(urlCompleta, data);
+  }
+
+  eliminarTipoDocumentoIdentidad(id: number) : Observable<boolean> {
+    const endPoint = this.tdiApi.eliminarTipoDocumentoIdentidad;
+    const urlCompleta = `${this.urlTdi}${this.tdiController}/${endPoint}`;
+    return this._consultaApi.consumoApiDelete<boolean>(urlCompleta, id);
+  }
 }

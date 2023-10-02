@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { MensajeSistema } from 'src/app/enum/mensaje-sistema';
 import { TipoDocumentoIdentidad, TipoDocumentoIdentidadRequest } from 'src/app/models/tipodocumentoIdentidad/tipoDocuemtnoIdentidad.model';
+import { AlertaService } from 'src/app/services/compartido/alerta.service';
 import { SesionUsuarioService } from 'src/app/services/compartido/sesion-usuario.service';
 import { TipoDocumentoIdentidadService } from 'src/app/services/tipoDocumentoIdentidad/tipo-documento-identidad.service';
 
@@ -15,13 +17,14 @@ export class TipoDocumentoIdentidadComponent implements OnInit {
   usuario: any;
   tiposDocumentoIdentidad: TipoDocumentoIdentidad[] = [];
   bodyTable: boolean = false;
-  controles: boolean = false
+  controles: boolean = false;
 
   constructor(
     private _tipoDocumentoIdentidadService: TipoDocumentoIdentidadService,
     private _sesionService: SesionUsuarioService,
     private _spinner: NgxSpinnerService,
-    private _formBuilder: FormBuilder
+    private _formBuilder: FormBuilder,
+    private _alertaService: AlertaService
   ){}
 
   ngOnInit(): void {
@@ -58,23 +61,51 @@ export class TipoDocumentoIdentidadComponent implements OnInit {
   grabarTipoDocumentoIdentidad(){
     this.iniciarAnimacion();
     this.tipoDocumentoIdentidadform.controls['usuarioRegistro'].setValue(this.usuario.id);
-
-    if(this.tipoDocumentoIdentidadform.controls['usuarioRegistro'].value !== 0){
-      this.finalizarAnimacion();
-      alert('Edicion');
-    } else {
-      this._tipoDocumentoIdentidadService.registrarTipoDocumentoIdentidad(this.tipoDocumentoIdentidadform.value as TipoDocumentoIdentidadRequest).subscribe({
+    let idTipodocumentoIdentidad = this.tipoDocumentoIdentidadform.controls['id'].value;
+    if(idTipodocumentoIdentidad !== 0){
+      this._tipoDocumentoIdentidadService.modificarTipoDocumentoIdentidad(this.tipoDocumentoIdentidadform.value as TipoDocumentoIdentidadRequest).subscribe({
         next: (data: TipoDocumentoIdentidad) => {
+          this._alertaService.mostrarMensajeSuccess(MensajeSistema.ModificarTipoDocumentoIdentidad);
           this.resetForm();
           this.obtenerTiposDocumentoIdentidad();
           this.finalizarAnimacion();
+          this.deshabilitarControles();
         },
-        error: (error) => {
+        error: (err) => {
           this.finalizarAnimacion();
-          console.log(error);
+          console.log(err);
+        }
+      })
+    } else {
+      this._tipoDocumentoIdentidadService.registrarTipoDocumentoIdentidad(this.tipoDocumentoIdentidadform.value as TipoDocumentoIdentidadRequest).subscribe({
+        next: (data: TipoDocumentoIdentidad) => {
+          this._alertaService.mostrarMensajeSuccess(MensajeSistema.RegistrarTipoDocumentoIDentificacion);
+          this.resetForm();
+          this.obtenerTiposDocumentoIdentidad();
+          this.finalizarAnimacion();
+          this.deshabilitarControles();
+        },
+        error: (err: any) => {
+          this.finalizarAnimacion();
+          console.log(err);
         }
       });
     }
+  }
+
+  eliminarTipoDocumentoIdentidad(id: number){
+    this.iniciarAnimacion();
+    this._tipoDocumentoIdentidadService.eliminarTipoDocumentoIdentidad(id).subscribe({
+      next: (data: boolean) => {
+        this._alertaService.mostrarMensajeSuccess(MensajeSistema.EliminarTipoDocumentoIdentidad);
+        this.obtenerTiposDocumentoIdentidad();
+        this.finalizarAnimacion();
+      },
+      error: (err: any) => {
+        this.finalizarAnimacion();
+        console.log(err);
+      }
+    })
   }
 
   iniciarAnimacion(){
@@ -95,6 +126,7 @@ export class TipoDocumentoIdentidadComponent implements OnInit {
 
   resetForm(){
     this.tipoDocumentoIdentidadform.reset();
+    this.tipoDocumentoIdentidadform.controls['id'].setValue(0);
   }
 
   setTipodocumentoIdentidad(obj: TipoDocumentoIdentidad){
@@ -119,6 +151,15 @@ export class TipoDocumentoIdentidadComponent implements OnInit {
   editar(obj: TipoDocumentoIdentidad){
     this.setTipodocumentoIdentidad(obj);
     this.habilitarControles();
+  }
+
+  async eliminar(obj: TipoDocumentoIdentidad){
+    let titulo = MensajeSistema.ConfirmarEliminarTipoDocumentoIdentidad.replace("[tdi]", obj.nombre);
+    let result: any = await this._alertaService.mostrarMensajeConfirmacion(titulo);
+
+    if(result.isConfirmed){
+      this.eliminarTipoDocumentoIdentidad(obj.id);
+    }
   }
 
 }

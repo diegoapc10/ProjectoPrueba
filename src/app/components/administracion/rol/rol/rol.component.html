@@ -1,0 +1,68 @@
+<div class="container">
+    <div class="card border-dark">
+        <div class="card-header">
+            Roles
+        </div>
+        <div class="card-body">
+            <form [formGroup]="rolForm" (submit)="grabarRol()" autocomplete="off">
+                <div class="col-sm-3">
+                    <input type="number" formControlName="id" id="id" [hidden]="true">
+                </div>
+                <div class="row mb-3">
+                    <label for="nombre" class="col-sm-2 col-form-label"><strong>Nombre</strong></label>
+                    <div class="col-sm-5">
+                        <input formControlName="nombre" type="text" class="form-control" id="nombre"
+                            [autocomplete]="false" [readOnly]="!controles">
+                    </div>
+                    <div *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)" class="row">
+                        <div class="text-danger">
+                            <div *ngIf="nombre.errors?.['required']">
+                                <strong>El nombre es obligatorio</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-secondary" (click)="nuevo()">Nuevo</button>
+                        <button type="submit" class="btn btn-success">Grabar</button>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <p class="card-title">
+                        <strong>Listado</strong>
+                    </p>
+                </div>
+                <div class="row">
+                    <div class="table-responsive">
+                        <table class="table table-hover table-bordered table-sm">
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="text-center">ID</th>
+                                    <th scope="col">Nombre</th>
+                                    <th scope="col"></th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody *ngIf="bodyTable" class="table-group-divider">
+                                <tr *ngFor="let item of roles">
+                                    <th scope="row" class="text-center">{{item.id}}</th>
+                                    <td>{{item.nombre}}</td>
+                                    <td><button type="button" class="btn btn-dark btn-sm" (click)="editar(item)"><i
+                                                class="fa-solid fa-pen-to-square"></i></button></td>
+                                    <td><button type="button" class="btn btn-danger btn-sm" (click)="eliminar(item)"><i
+                                                class="fa-regular fa-trash-can"></i></button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-clip-rotate-multiple"
+    [fullScreen]="true">
+    <p style="color: white"> Loading... </p>
+</ngx-spinner>

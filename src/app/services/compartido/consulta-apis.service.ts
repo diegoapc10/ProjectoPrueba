@@ -42,6 +42,31 @@ export class ConsultaApisService {
     return this._http.post<ResponseService>(urlEndPoint, body, { headers: headers }).pipe(this.pipeGenerico());
   }
 
+  public consumoApiPut<Type>(urlEndPoint: string, body: any) : Observable<Type> {
+    let headers = {};
+    let jsonToken = localStorage.getItem('usuario_token') ?? '';
+    if(jsonToken != ''){
+      this.tokenDto =JSON.parse(jsonToken);
+      headers = {
+        'Authorization': `Bearer ${this.tokenDto.token}`
+      }
+    }
+
+    return this._http.put<ResponseService>(urlEndPoint, body, { headers: headers }).pipe(this.pipeGenerico());
+  }
+
+  public consumoApiDelete<Type>(urlEndPoint: string, body: any) : Observable<Type> {
+    let headers = {};
+    let jsonToken = localStorage.getItem('usuario_token') ?? '';
+    if(jsonToken != ''){
+      this.tokenDto =JSON.parse(jsonToken);
+      headers = {
+        'Authorization': `Bearer ${this.tokenDto.token}`
+      }
+    }
+
+    return this._http.delete<ResponseService>(urlEndPoint, { headers: headers, body: body }).pipe(this.pipeGenerico());
+  }
 
   private modelHttpParams = (model: any) => {
     let params = new HttpParams();
