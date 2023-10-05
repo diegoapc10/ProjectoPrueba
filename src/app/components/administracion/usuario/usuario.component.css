@@ -1,0 +1,25 @@
+.card-header{
+    background-color: #52908b;
+    color: #e9ecef;
+    font-weight: bold;
+  }
+  
+  .card-body{
+    background-color: #f4f4ef !important;
+    /* color: #e9ecef; */
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  .btn-secondary{
+    background-color: #113743;
+  }
+  
+  .btn-warning{
+    background-color: #ffd952;
+    color: #fff;
+  }
+  
+  .btn-warning:hover{
+    background-color: #f7c41f;
+  }
+  

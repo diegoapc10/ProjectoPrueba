@@ -34,6 +34,7 @@ export class TipoDocumentoIdentidadComponent implements OnInit {
 
   tipoDocumentoIdentidadform = this._formBuilder.group({
     id: [0],
+    codigo: ['', Validators.required],
     nombre: ['', Validators.required],
     descripcion: [''],
     usuarioRegistro: [0, Validators.required]
@@ -41,6 +42,10 @@ export class TipoDocumentoIdentidadComponent implements OnInit {
 
   get nombre(){
     return this.tipoDocumentoIdentidadform.controls['nombre'];
+  }
+
+  get codigo(){
+    return this.tipoDocumentoIdentidadform.controls['codigo'];
   }
 
   obtenerTiposDocumentoIdentidad(){
@@ -95,11 +100,14 @@ export class TipoDocumentoIdentidadComponent implements OnInit {
 
   eliminarTipoDocumentoIdentidad(id: number){
     this.iniciarAnimacion();
-    this._tipoDocumentoIdentidadService.eliminarTipoDocumentoIdentidad(id).subscribe({
+    this.tipoDocumentoIdentidadform.controls['usuarioRegistro'].setValue(this.usuario.id);
+    this._tipoDocumentoIdentidadService.eliminarTipoDocumentoIdentidad(this.tipoDocumentoIdentidadform.value as TipoDocumentoIdentidadRequest).subscribe({
       next: (data: boolean) => {
         this._alertaService.mostrarMensajeSuccess(MensajeSistema.EliminarTipoDocumentoIdentidad);
+        this.resetForm();
         this.obtenerTiposDocumentoIdentidad();
         this.finalizarAnimacion();
+        this.deshabilitarControles();
       },
       error: (err: any) => {
         this.finalizarAnimacion();
@@ -131,6 +139,7 @@ export class TipoDocumentoIdentidadComponent implements OnInit {
 
   setTipodocumentoIdentidad(obj: TipoDocumentoIdentidad){
     this.tipoDocumentoIdentidadform.controls['id'].setValue(obj.id);
+    this.tipoDocumentoIdentidadform.controls['codigo'].setValue(obj.codigo);
     this.tipoDocumentoIdentidadform.controls['nombre'].setValue(obj.nombre);
     this.tipoDocumentoIdentidadform.controls['descripcion'].setValue(obj.descripcion);
   }
@@ -158,6 +167,7 @@ export class TipoDocumentoIdentidadComponent implements OnInit {
     let result: any = await this._alertaService.mostrarMensajeConfirmacion(titulo);
 
     if(result.isConfirmed){
+      this.setTipodocumentoIdentidad(obj);
       this.eliminarTipoDocumentoIdentidad(obj.id);
     }
   }

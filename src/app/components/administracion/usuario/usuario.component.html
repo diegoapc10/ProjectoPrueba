@@ -1,0 +1,136 @@
+<div class="container">
+    <div class="card border-dark">
+        <div class="card-header">
+            Usuarios
+        </div>
+        <div class="card-body">
+            <form [formGroup]="usuarioForm" (ngSubmit)="grabar()" autocomplete="off">
+                <div class="mb-3 row">
+                    <input type="number" formControlName="id" id="id" [hidden]="true">
+                </div>
+                <div class="mb-3 row">
+                    <label for="tipoDocumentoIdentidad" class="col-sm-3 col-form-label"><strong>Tipo Documento Identidad</strong></label>
+                    <div class="col-sm-4">
+                        <select name="tipoDocumentoIdentidad" id="tipoDocumentoIdentidad" class="form-control" formControlName="tipoDocumentoIdentidadId">
+                            <option [value]="0" [selected]="true">Seleccione</option>
+                            <option *ngFor="let item of tdi" [value]="item.id">{{item.nombre}}</option>
+                        </select>
+                    </div>
+                    <div *ngIf="tipoDocumentoIdentidadId.invalid && (tipoDocumentoIdentidadId.dirty || tipoDocumentoIdentidadId.touched)" class="mt-1 row">
+                        <div class="offset-sm-3 col-sm-5">
+                            <div *ngIf="tipoDocumentoIdentidadId.errors?.['required']">
+                                <span class="badge rounded-pill text-bg-danger">Debe seleccionar un tipo de documento de identidad</span>
+                            </div>
+                            <div *ngIf="tipoDocumentoIdentidadId.errors?.['itemValido']">
+                                <span class="badge rounded-pill text-bg-danger">Debe seleccionar un tipo de documento de identidad</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="documentoIdentidad" class="col-sm-3 col-form-label"><strong>N° Documento Identidad</strong></label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" formControlName="documentoIdentidad" name="documentoIdentidad" id="documentoIdentidad">
+                    </div>
+                    <div *ngIf="documentoIdentidad.invalid && (documentoIdentidad.dirty || documentoIdentidad.touched)" class="mt-1 row">
+                        <div class="offset-sm-3 col-sm-5">
+                            <div *ngIf="documentoIdentidad.errors?.['required']">
+                                <span class="badge rounded-pill text-bg-danger">El Documento de Identidad es obligatorio</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="nombres" class="col-sm-3 col-form-label"><strong>Nombres</strong></label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" formControlName="nombres" name="nombres" id="nombres">
+                    </div>
+                    <div *ngIf="nombres.invalid && (nombres.dirty || nombres.touched)" class="mt-1 row">
+                        <div class="offset-sm-3 col-sm-5">
+                            <div *ngIf="nombres.errors?.['required']">
+                                <span class="badge rounded-pill text-bg-danger">Los Nombres son obligatorios</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="apellidoPaterno" class="col-sm-3 col-form-label"><strong>Apellido Paterno</strong></label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" formControlName="apellidoPaterno" name="apellidoPaterno" id="apellidoPaterno">
+                    </div>
+                    <div *ngIf="apellidoPaterno.invalid && (apellidoPaterno.dirty || apellidoPaterno.touched)" class="mt-1 row">
+                        <div class="offset-sm-3 col-sm-5">
+                            <div *ngIf="apellidoPaterno.errors?.['required']">
+                                <span class="badge rounded-pill text-bg-danger">El Apellido Paterno es obligatorio</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="apellidoMaterno" class="col-sm-3 col-form-label"><strong>Apellido Materno</strong></label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" formControlName="apellidoMaterno" name="apellidoMaterno" id="apellidoMaterno">
+                    </div>
+                    <div *ngIf="apellidoMaterno.invalid && (apellidoMaterno.dirty || apellidoMaterno.touched)" class="mt-1 row">
+                        <div class="offset-sm-3 col-sm-5">
+                            <div *ngIf="apellidoMaterno.errors?.['required']">
+                                <span class="badge rounded-pill text-bg-danger">El Apellido Materno es obligatorio</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="nombreUsuario" class="col-sm-3 col-form-label"><strong>Nombre Usuario</strong></label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" formControlName="nombreUsuario" name="nombreUsuario" id="nombreUsuario">
+                    </div>
+                    <div *ngIf="nombreUsuario.invalid && (nombreUsuario.dirty || nombreUsuario.touched)" class="mt-1 row">
+                        <div class="offset-sm-3 col-sm-5">
+                            <div *ngIf="nombreUsuario.errors?.['required']">
+                                <span class="badge rounded-pill text-bg-danger">El Nombre de usuario es obligatorio</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="email" class="col-sm-3 col-form-label"><strong>Email</strong></label>
+                    <div class="col-sm-4">
+                        <input type="email" class="form-control" formControlName="email" name="email" id="email">
+                    </div>
+                    <div *ngIf="email.invalid && (email.dirty || email.touched)" class="mt-1 row">
+                        <div class="offset-sm-3 col-sm-5">
+                            <div *ngIf="email.errors?.['required']">
+                                <span class="badge rounded-pill text-bg-danger">El Email es obligatorio</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="clave" class="col-sm-3 col-form-label"><strong>Clave</strong></label>
+                    <div class="col-sm-4">
+                        <input type="password" class="form-control" formControlName="clave" name="clave" id="clave">
+                    </div>
+                    <div *ngIf="clave.invalid && (clave.dirty || clave.touched)" class="mt-1 row">
+                        <div class="offset-sm-3 col-sm-5">
+                            <div *ngIf="clave.errors?.['required']">
+                                <span class="badge rounded-pill text-bg-danger">La Clave es obligatoria</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="telefono" class="col-sm-3 col-form-label"><strong>Teléfono</strong></label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" formControlName="telefono" name="telefono" id="telefono">
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="btn-group" role="group">
+                      <button type="button" class="btn btn-secondary">Nuevo</button>
+                      <button type="submit" class="btn btn-success">Grabar</button>
+                    </div>
+                  </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -9,14 +9,27 @@
           <input type="number" formControlName="id" id="id" [hidden]="true">
         </div>
         <div class="row mb-3">
+          <label for="codigo" class="col-sm-2 col-form-label"><strong>Código</strong></label>
+          <div class="col-sm-5">
+            <input formControlName="codigo" type="text" class="form-control" id="codigo" [autocomplete]="false" [readOnly]="!controles" >
+          </div>
+          <div *ngIf="codigo.invalid && (codigo.dirty || codigo.touched)" class="mt-1 row">
+            <div class="offset-sm-2 col-sm-5">
+              <div *ngIf="codigo.errors?.['required']">
+                <span class="badge rounded-pill text-bg-danger">El Código es obligatorio</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row mb-3">
           <label for="nombre" class="col-sm-2 col-form-label"><strong>Nombre</strong></label>
           <div class="col-sm-5">
             <input formControlName="nombre" type="text" class="form-control" id="nombre" [autocomplete]="false" [readOnly]="!controles" >
           </div>
-          <div *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)" class="row">
-            <div class="text-danger">
+          <div *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)" class="mt-1 row">
+            <div class="offset-sm-2 col-sm-5">
               <div *ngIf="nombre.errors?.['required']">
-                <strong>El nombre es obligatorio</strong>
+                <span class="badge rounded-pill text-bg-danger">El Nombre es obligatorio</span>
               </div>
             </div>
           </div>
@@ -44,6 +57,7 @@
               <thead>
                 <tr>
                   <th scope="col" class="text-center">ID</th>
+                  <th scope="col" class="text-center">Código</th>
                   <th scope="col">Nombre</th>
                   <th scope="col">Descripción</th>
                   <th scope="col"></th>
@@ -53,6 +67,7 @@
               <tbody *ngIf="bodyTable" class="table-group-divider">
                 <tr *ngFor="let item of tiposDocumentoIdentidad" >
                   <th scope="row" class="text-center">{{item.id}}</th>
+                  <td class="text-center">{{item.codigo}}</td>
                   <td>{{item.nombre}}</td>
                   <td>{{item.descripcion}}</td>
                   <td><button type="button" class="btn btn-dark btn-sm" (click)="editar(item)"><i class="fa-solid fa-pen-to-square"></i></button></td>

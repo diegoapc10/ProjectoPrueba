@@ -11,7 +11,8 @@ export const endPointTipoDocumentoIdentidad = {
         obtenerTiposDocumentoIdentidad: 'ObtenerTiposDocumentoIdentidad',
         registrarTipoDocumento: 'RegistrarTipoDocumento',
         modificarTipoDocumentoIdentidad: 'ModificarTipoDocumentoIdentidad',
-        eliminarTipoDocumentoIdentidad: 'EliminarTipoDocumentoIdentidad'
+        eliminarTipoDocumentoIdentidad: 'EliminarTipoDocumentoIdentidad',
+        listarComboBox: 'ListarComboBox'
     }
 }
 
@@ -19,6 +20,8 @@ export const endPointRol = {
     apiRol: {
         apiController: 'api/Rol',
         obtenerRoles: 'ObtenerRoles',
-        registrarRol: 'RegistrarRol'
+        registrarRol: 'RegistrarRol',
+        modificarRol: 'ModificarRol',
+        eliminarRol: 'EliminarRol'
     }
 }

@@ -14,14 +14,7 @@ export class ConsultaApisService {
   constructor(private _http: HttpClient) { }
   
   public consumoApiGet<Type>(urlEndPoint: string, model?: any): Observable<Type>{
-    let headers = {};
-    let jsonToken = localStorage.getItem('usuario_token') ?? '';
-    if(jsonToken != ''){
-      this.tokenDto =JSON.parse(jsonToken);
-      headers = {
-        'Authorization': `Bearer ${this.tokenDto.token}`
-      }
-    }
+    let headers = this.adjuntarToken();
 
     let params = new HttpParams();
     if(model)
@@ -30,32 +23,24 @@ export class ConsultaApisService {
   }
 
   public consumoApiPost<Type>(urlEndPoint: string, body: any): Observable<Type> {
-    let headers = {};
-    let jsonToken = localStorage.getItem('usuario_token') ?? '';
-    if(jsonToken != ''){
-      this.tokenDto =JSON.parse(jsonToken);
-      headers = {
-        'Authorization': `Bearer ${this.tokenDto.token}`
-      }
-    }
+    let headers = this.adjuntarToken();
 
     return this._http.post<ResponseService>(urlEndPoint, body, { headers: headers }).pipe(this.pipeGenerico());
   }
 
   public consumoApiPut<Type>(urlEndPoint: string, body: any) : Observable<Type> {
-    let headers = {};
-    let jsonToken = localStorage.getItem('usuario_token') ?? '';
-    if(jsonToken != ''){
-      this.tokenDto =JSON.parse(jsonToken);
-      headers = {
-        'Authorization': `Bearer ${this.tokenDto.token}`
-      }
-    }
+    let headers = this.adjuntarToken();
 
     return this._http.put<ResponseService>(urlEndPoint, body, { headers: headers }).pipe(this.pipeGenerico());
   }
 
   public consumoApiDelete<Type>(urlEndPoint: string, body: any) : Observable<Type> {
+    let headers = this.adjuntarToken();
+
+    return this._http.delete<ResponseService>(urlEndPoint, { headers: headers, body: body }).pipe(this.pipeGenerico());
+  }
+
+  private adjuntarToken = () => {
     let headers = {};
     let jsonToken = localStorage.getItem('usuario_token') ?? '';
     if(jsonToken != ''){
@@ -64,8 +49,7 @@ export class ConsultaApisService {
         'Authorization': `Bearer ${this.tokenDto.token}`
       }
     }
-
-    return this._http.delete<ResponseService>(urlEndPoint, { headers: headers, body: body }).pipe(this.pipeGenerico());
+    return headers;
   }
 
   private modelHttpParams = (model: any) => {
@@ -86,7 +70,7 @@ export class ConsultaApisService {
           return this.errorControlado(response);
         }
       }),
-      catchError(this.Internalservererror)
+      catchError(this.internalServerError)
     );
   }
 
@@ -98,11 +82,11 @@ export class ConsultaApisService {
     return throwError(() => response.message);
   }
 
-  private Internalservererror = (errorResponse: HttpErrorResponse) => {
+  private internalServerError = (errorResponse: HttpErrorResponse) => {
     console.log(errorResponse);
     if(errorResponse.error !== null)
       return throwError(() => errorResponse.error.message);
 
-      return throwError(() => errorResponse.message);
+    return throwError(() => errorResponse.message);
   }
 }

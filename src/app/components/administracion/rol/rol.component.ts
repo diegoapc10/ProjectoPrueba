@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { MensajeSistema } from 'src/app/enum/mensaje-sistema';
 import { Rol, RolRequest } from 'src/app/models/rol/rol.model';
 import { AlertaService } from 'src/app/services/compartido/alerta.service';
 import { SesionUsuarioService } from 'src/app/services/compartido/sesion-usuario.service';
@@ -61,10 +62,23 @@ export class RolComponent implements OnInit {
     this.rolForm.controls['usuarioRegistro'].setValue(this.usuario.id);
     let idRol = this.rolForm.controls['id'].value;
     if(idRol !== 0){
-
+      this._rolService.modificarRol(this.rolForm.value as RolRequest).subscribe({
+        next: (data: Rol) => {
+          this._alertaService.mostrarMensajeSuccess(MensajeSistema.ModificarRol);
+          this.resetForm();
+          this.obtenerRoles();
+          this.finalizarAnimacion();
+          this.deshabilitarControles();
+        },
+        error: (err: any) => {
+          this.finalizarAnimacion();
+          console.log(err);
+        }
+      })
     } else {
       this._rolService.registrarRol(this.rolForm.value as RolRequest).subscribe({
         next: (data: Rol) => {
+          this._alertaService.mostrarMensajeSuccess(MensajeSistema.RegistrarRol);
           this.resetForm();
           this.obtenerRoles();
           this.finalizarAnimacion();
@@ -76,6 +90,24 @@ export class RolComponent implements OnInit {
         }
       })
     }
+  }
+
+  eliminarRol(){
+    this.iniciarAnimacion();
+    this.rolForm.controls['usuarioRegistro'].setValue(this.usuario.id);
+    this._rolService.eliminarRol(this.rolForm.value as RolRequest).subscribe({
+      next: (data: boolean) => {
+        this._alertaService.mostrarMensajeSuccess(MensajeSistema.EliminarRol);
+        this.resetForm();
+        this.obtenerRoles();
+        this.finalizarAnimacion();
+        this.deshabilitarControles();
+      },
+      error: (err: any) => {
+        this.finalizarAnimacion();
+        console.log(err);
+      }
+    })
   }
 
   iniciarAnimacion(){
@@ -123,7 +155,13 @@ export class RolComponent implements OnInit {
   }
 
   async eliminar(obj: Rol){
-    
+    let titulo = MensajeSistema.ConfirmarEliminarRol.replace("[rol]", obj.nombre);
+    let result: any = await this._alertaService.mostrarMensajeConfirmacion(titulo);
+
+    if(result.isConfirmed){
+      this.setRol(obj);
+      this.eliminarRol();
+    }
   }
 
 }

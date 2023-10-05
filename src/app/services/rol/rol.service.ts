@@ -32,4 +32,16 @@ export class RolService {
     const urlCompleta = `${this.urlRol}${this.rolController}/${endPoint}`;
     return this._consultaApi.consumoApiPost<Rol>(urlCompleta,data);
   }
+
+  modificarRol(data: RolRequest): Observable<Rol> {
+    const endPoint = this.rolApi.modificarRol;
+    const urlCompleta = `${this.urlRol}${this.rolController}/${endPoint}`;
+    return this._consultaApi.consumoApiPut<Rol>(urlCompleta,data);
+  }
+
+  eliminarRol(data: RolRequest) : Observable<boolean> {
+    const endPoint = this.rolApi.eliminarRol;
+    const urlCompleta = `${this.urlRol}${this.rolController}/${endPoint}`;
+    return this._consultaApi.consumoApiDelete<boolean>(urlCompleta,data);
+  }
 }
