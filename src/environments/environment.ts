@@ -1,5 +1,6 @@
 export const environment = {
     AuthenticationService: '',
     TipoDocumentoService: '',
-    RolService: ''
+    RolService: '',
+    UsuarioService: ''
 };

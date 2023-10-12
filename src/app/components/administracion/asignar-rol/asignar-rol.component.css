@@ -27,6 +27,10 @@
     background-color: #f7c41f;
   }
   
+  th{
+    vertical-align: middle;
+  }
+
   .form-control:disabled {
     background-color: #afbec9;
     opacity: 1;

@@ -1,7 +1,7 @@
 <div class="container">
     <div class="card border-dark">
         <div class="card-header">
-            Usuarios
+            <strong>Usuarios</strong>
         </div>
         <div class="card-body">
             <form [formGroup]="usuarioForm" (ngSubmit)="grabar()" autocomplete="off">
@@ -12,8 +12,8 @@
                     <label for="tipoDocumentoIdentidad" class="col-sm-3 col-form-label"><strong>Tipo Documento Identidad</strong></label>
                     <div class="col-sm-4">
                         <select name="tipoDocumentoIdentidad" id="tipoDocumentoIdentidad" class="form-control" formControlName="tipoDocumentoIdentidadId">
-                            <option [value]="0" [selected]="true">Seleccione</option>
-                            <option *ngFor="let item of tdi" [value]="item.id">{{item.nombre}}</option>
+                            <option [ngValue]="0" [selected]="true">Seleccione</option>
+                            <option *ngFor="let item of tdi" [ngValue]="item.id">{{item.nombre}}</option>
                         </select>
                     </div>
                     <div *ngIf="tipoDocumentoIdentidadId.invalid && (tipoDocumentoIdentidadId.dirty || tipoDocumentoIdentidadId.touched)" class="mt-1 row">
@@ -30,7 +30,7 @@
                 <div class="mb-3 row">
                     <label for="documentoIdentidad" class="col-sm-3 col-form-label"><strong>N° Documento Identidad</strong></label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control" formControlName="documentoIdentidad" name="documentoIdentidad" id="documentoIdentidad">
+                        <input type="text" class="form-control" formControlName="documentoIdentidad" name="documentoIdentidad" id="documentoIdentidad" >
                     </div>
                     <div *ngIf="documentoIdentidad.invalid && (documentoIdentidad.dirty || documentoIdentidad.touched)" class="mt-1 row">
                         <div class="offset-sm-3 col-sm-5">
@@ -43,7 +43,7 @@
                 <div class="mb-3 row">
                     <label for="nombres" class="col-sm-3 col-form-label"><strong>Nombres</strong></label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control" formControlName="nombres" name="nombres" id="nombres">
+                        <input type="text" class="form-control" formControlName="nombres" name="nombres" id="nombres" >
                     </div>
                     <div *ngIf="nombres.invalid && (nombres.dirty || nombres.touched)" class="mt-1 row">
                         <div class="offset-sm-3 col-sm-5">
@@ -56,7 +56,7 @@
                 <div class="mb-3 row">
                     <label for="apellidoPaterno" class="col-sm-3 col-form-label"><strong>Apellido Paterno</strong></label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control" formControlName="apellidoPaterno" name="apellidoPaterno" id="apellidoPaterno">
+                        <input type="text" class="form-control" formControlName="apellidoPaterno" name="apellidoPaterno" id="apellidoPaterno" >
                     </div>
                     <div *ngIf="apellidoPaterno.invalid && (apellidoPaterno.dirty || apellidoPaterno.touched)" class="mt-1 row">
                         <div class="offset-sm-3 col-sm-5">
@@ -69,7 +69,7 @@
                 <div class="mb-3 row">
                     <label for="apellidoMaterno" class="col-sm-3 col-form-label"><strong>Apellido Materno</strong></label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control" formControlName="apellidoMaterno" name="apellidoMaterno" id="apellidoMaterno">
+                        <input type="text" class="form-control" formControlName="apellidoMaterno" name="apellidoMaterno" id="apellidoMaterno" >
                     </div>
                     <div *ngIf="apellidoMaterno.invalid && (apellidoMaterno.dirty || apellidoMaterno.touched)" class="mt-1 row">
                         <div class="offset-sm-3 col-sm-5">
@@ -82,7 +82,7 @@
                 <div class="mb-3 row">
                     <label for="nombreUsuario" class="col-sm-3 col-form-label"><strong>Nombre Usuario</strong></label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control" formControlName="nombreUsuario" name="nombreUsuario" id="nombreUsuario">
+                        <input type="text" class="form-control" formControlName="nombreUsuario" name="nombreUsuario" id="nombreUsuario" >
                     </div>
                     <div *ngIf="nombreUsuario.invalid && (nombreUsuario.dirty || nombreUsuario.touched)" class="mt-1 row">
                         <div class="offset-sm-3 col-sm-5">
@@ -95,12 +95,17 @@
                 <div class="mb-3 row">
                     <label for="email" class="col-sm-3 col-form-label"><strong>Email</strong></label>
                     <div class="col-sm-4">
-                        <input type="email" class="form-control" formControlName="email" name="email" id="email">
+                        <input type="email" class="form-control" formControlName="email" name="email" id="email" >
                     </div>
                     <div *ngIf="email.invalid && (email.dirty || email.touched)" class="mt-1 row">
                         <div class="offset-sm-3 col-sm-5">
                             <div *ngIf="email.errors?.['required']">
                                 <span class="badge rounded-pill text-bg-danger">El Email es obligatorio</span>
+                            </div>
+                        </div>
+                        <div class="offset-sm-3 col-sm-5">
+                            <div *ngIf="email.errors?.['email']">
+                                <span class="badge rounded-pill text-bg-danger">El email ingresado tiene un formato incorrecto</span>
                             </div>
                         </div>
                     </div>
@@ -126,10 +131,54 @@
                 </div>
                 <div class="row mb-3">
                     <div class="btn-group" role="group">
-                      <button type="button" class="btn btn-secondary">Nuevo</button>
-                      <button type="submit" class="btn btn-success">Grabar</button>
+                        <button type="button" class="btn btn-secondary" (click)="nuevo()">Nuevo</button>
+                        <button type="submit" class="btn btn-success">Grabar</button>
                     </div>
-                  </div>
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-danger" (click)="cancelar()">Cancelar</button>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <p class="card-title">
+                        <strong>Listado</strong>
+                    </p>
+                </div>
+                <div class="row">
+                    <div class="table-responsive">
+                        <table class="table table-hover table-bordered table-sm">
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="text-center">ID</th>
+                                    <th scope="col" class="text-center">Tipo de Documento Identidad</th>
+                                    <th scope="col">Documento Identidad</th>
+                                    <th scope="col">Nombres</th>
+                                    <th scope="col">Apellido Paterno</th>
+                                    <th scope="col">Apellido Materno</th>
+                                    <th scope="col">Nombre Usuario</th>
+                                    <th scope="col" class="text-center">Email</th>
+                                    <th scope="col" class="text-center">Teléfono</th>
+                                    <th scope="col"></th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody *ngIf="bodyTable" class="table-group-divider">
+                                <tr *ngFor="let item of usuarios">
+                                    <td scope="row" class="text-center">{{item.id}}</td>
+                                    <td class="text-center">{{item.tipoDocumentoIdentidadNombre}}</td>
+                                    <td>{{item.documentoIdentidad}}</td>
+                                    <td>{{item.nombres}}</td>
+                                    <td>{{item.apellidoPaterno}}</td>
+                                    <td>{{item.apellidoMaterno}}</td>
+                                    <td>{{item.nombreUsuario}}</td>
+                                    <td>{{item.email}}</td>
+                                    <td>{{item.telefono}}</td>
+                                    <td><button type="button" class="btn btn-dark btn-sm" (click)="editar(item)"><i class="fa-solid fa-pen-to-square"></i></button></td>
+                                    <td><button type="button" class="btn btn-danger btn-sm" (click)="eliminar(item)"><i class="fa-regular fa-trash-can"></i></button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </form>
         </div>
     </div>

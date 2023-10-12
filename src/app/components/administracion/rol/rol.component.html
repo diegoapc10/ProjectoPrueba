@@ -5,19 +5,18 @@
         </div>
         <div class="card-body">
             <form [formGroup]="rolForm" (submit)="grabarRol()" autocomplete="off">
-                <div class="col-sm-3">
+                <div class="row-sm-3">
                     <input type="number" formControlName="id" id="id" [hidden]="true">
                 </div>
                 <div class="row mb-3">
                     <label for="nombre" class="col-sm-2 col-form-label"><strong>Nombre</strong></label>
                     <div class="col-sm-5">
-                        <input formControlName="nombre" type="text" class="form-control" id="nombre"
-                            [autocomplete]="false" [readOnly]="!controles">
+                        <input formControlName="nombre" type="text" class="form-control" id="nombre">
                     </div>
-                    <div *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)" class="row">
-                        <div class="text-danger">
+                    <div *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)" class="mt-1 row">
+                        <div class="offset-sm-2 col-sm-5">
                             <div *ngIf="nombre.errors?.['required']">
-                                <strong>El nombre es obligatorio</strong>
+                                <span class="badge rounded-pill text-bg-danger">El Nombre es obligatorio</span>
                             </div>
                         </div>
                     </div>
@@ -26,6 +25,9 @@
                     <div class="btn-group" role="group">
                         <button type="button" class="btn btn-secondary" (click)="nuevo()">Nuevo</button>
                         <button type="submit" class="btn btn-success">Grabar</button>
+                    </div>
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-danger" (click)="cancelar()">Cancelar</button>
                     </div>
                 </div>
                 <div class="row mb-3">
@@ -46,7 +48,7 @@
                             </thead>
                             <tbody *ngIf="bodyTable" class="table-group-divider">
                                 <tr *ngFor="let item of roles">
-                                    <th scope="row" class="text-center">{{item.id}}</th>
+                                    <td scope="row" class="text-center">{{item.id}}</td>
                                     <td>{{item.nombre}}</td>
                                     <td><button type="button" class="btn btn-dark btn-sm" (click)="editar(item)"><i
                                                 class="fa-solid fa-pen-to-square"></i></button></td>

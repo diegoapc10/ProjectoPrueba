@@ -17,7 +17,7 @@ export class RolComponent implements OnInit {
   usuario: any;
   roles: Rol[] = []
   bodyTable: boolean = false;
-  controles: boolean = false
+  controles: boolean = false;
 
   constructor(
     private _rolService: RolService,
@@ -30,6 +30,7 @@ export class RolComponent implements OnInit {
   ngOnInit(): void {
     this.usuario = this._sesionService.setUsuario();
     this.obtenerRoles();
+    this.deshabilitarControles();
   }
 
   rolForm = this._formBuilder.group({
@@ -132,11 +133,11 @@ export class RolComponent implements OnInit {
   }
 
   habilitarControles(){
-    this.controles = true;
+    this.nombre.enable();
   }
 
   deshabilitarControles(){
-    this.controles = false;
+    this.nombre.disable();
   }
 
   nuevo(){
@@ -147,6 +148,11 @@ export class RolComponent implements OnInit {
   editar(obj: Rol){
     this.setRol(obj);
     this.habilitarControles();
+  }
+
+  cancelar(){
+    this.resetForm();
+    this.deshabilitarControles();
   }
 
   setRol(obj: Rol){

@@ -11,7 +11,11 @@
   }
   
   .btn-secondary{
-    background-color: #113743;
+    background-color: #195061;
+  }
+
+  .btn-secondary:hover{
+    background-color: #123945;
   }
   
   .btn-warning{
@@ -23,3 +27,7 @@
     background-color: #f7c41f;
   }
   
+  .form-control:disabled {
+    background-color: #afbec9;
+    opacity: 1;
+  }

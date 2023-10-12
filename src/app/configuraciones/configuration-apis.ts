@@ -25,3 +25,13 @@ export const endPointRol = {
         eliminarRol: 'EliminarRol'
     }
 }
+
+export const endPointUsuario = {
+    apiUsuario: {
+        apiController: 'api/Usuario',
+        obtenerUsuarios: 'ObtenerUsuarios',
+        registrarUsuario: 'RegistrarUsuario',
+        modificarUsuario: 'ModificarUsuario',
+        eliminarUsuario: 'EliminarUsuario'
+    }
+}

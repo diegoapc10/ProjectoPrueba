@@ -6,5 +6,9 @@ export enum MensajeSistema {
     RegistrarRol = "El rol fue registrado con éxito",
     ModificarRol = "El rol fue modificado con éxito",
     ConfirmarEliminarRol = "¿Está seguro que desea eliminar el rol [rol]?",
-    EliminarRol = "El rol fue eliminado con éxito"
+    EliminarRol = "El rol fue eliminado con éxito",
+    RegistrarUsuario = 'El usuario fue registrado con éxito',
+    ModificarUsuario = 'El usuario fue modificado con éxito',
+    ConfirmarEliminarUsuario = '¿Está seguro que desea eliminar el usuario [usuario]?',
+    EliminarUsuario = 'El usuario fue eliminado con éxito'
 }

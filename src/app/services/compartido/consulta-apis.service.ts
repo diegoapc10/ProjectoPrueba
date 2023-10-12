@@ -22,7 +22,7 @@ export class ConsultaApisService {
     return this._http.get<ResponseService>(urlEndPoint, { params: params, headers: headers }).pipe(this.pipeGenerico());
   }
 
-  public consumoApiPost<Type>(urlEndPoint: string, body: any): Observable<Type> {
+  public consumoApiPost<Type>(urlEndPoint: string, body?: any): Observable<Type> {
     let headers = this.adjuntarToken();
 
     return this._http.post<ResponseService>(urlEndPoint, body, { headers: headers }).pipe(this.pipeGenerico());
@@ -83,10 +83,14 @@ export class ConsultaApisService {
   }
 
   private internalServerError = (errorResponse: HttpErrorResponse) => {
-    console.log(errorResponse);
-    if(errorResponse.error !== null)
+    if(errorResponse.status == 0){
+      return throwError(() => 'Error: sin conexión con el recurso solicitado');
+    } else if(errorResponse.error !== null){
       return throwError(() => errorResponse.error.message);
-
-    return throwError(() => errorResponse.message);
+    } else if(typeof errorResponse.message != 'undefined' && errorResponse.message){
+      return throwError(() => errorResponse.message);
+    } else {
+      return throwError(() => errorResponse.message);
+    }
   }
 }

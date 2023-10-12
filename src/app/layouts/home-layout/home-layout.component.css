@@ -35,6 +35,11 @@
   width: 100vw;
 }
 
+main{
+  overflow-y: auto;
+  max-height: 850px;
+}
+
 /* Responsive */
 
 @media(min-width:768px){
@@ -42,3 +47,14 @@
       width: auto;
   }
 }
+
+@media (max-width: 576px) and (min-width: 0) { 
+  .content {
+      width: auto;
+  }
+
+  main{
+    overflow-y: auto;
+    max-height: 750px;
+  }
+ }

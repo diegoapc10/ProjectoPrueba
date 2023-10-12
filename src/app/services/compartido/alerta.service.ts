@@ -88,7 +88,7 @@ export class AlertaService {
       },
       buttonsStyling: false
     }).fire({
-      icon: 'error',
+      icon: 'info',
       title: title,
       html: mensaje
     })

@@ -1,0 +1,38 @@
+<div class="container">
+    <div class="card border-dark">
+        <div class="card-header">
+            Asignar Rol
+        </div>
+        <div class="card-body">
+            <form [formGroup]="frm"  (ngSubmit)="grabar()">
+                <div class="row mb-3">
+                    <label for="idUsuario" class="col-sm-2 col-form-label"><strong>Usuario</strong></label>
+                    <div class="col-sm-5">
+                        <ng-select class="form-control" [items]="usuarios" bindLabel="nombreCompleto" bindValue="id" formControlName="idUsuario" id="idUsuario" >
+                            <!-- <ng-option *ngFor="let item of roles" [value]="item.id" >{{item.nombre}}</ng-option> -->
+                        </ng-select>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="selectRol" class="col-sm-2 col-form-label"><strong>Rol</strong></label>
+                    <div class="col-sm-5">
+                        <ng-select class="form-control" [items]="roles" bindLabel="nombre" bindValue="id" formControlName="idRol" id="idRol" >
+                            <!-- <ng-option *ngFor="let item of roles" [value]="item.id" >{{item.nombre}}</ng-option> -->
+                        </ng-select>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="btn-group" role="group">
+                        <button type="submit" class="btn btn-success">Grabar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-clip-rotate-multiple"
+    [fullScreen]="true">
+    <p style="color: white"> Loading... </p>
+</ngx-spinner>

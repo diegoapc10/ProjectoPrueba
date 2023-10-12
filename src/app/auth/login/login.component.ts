@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 import { LoginRequest } from 'src/app/models/auth/login-request.model';
 import { LoginResponse } from 'src/app/models/auth/login-response.model';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { AlertaService } from 'src/app/services/compartido/alerta.service';
 import { SesionUsuarioService } from 'src/app/services/compartido/sesion-usuario.service';
 
 @Component({
@@ -20,7 +21,8 @@ export class LoginComponent implements OnInit {
     private _auth: AuthService,
     private _sesionUsuario: SesionUsuarioService,
     private _router: Router,
-    private _spinner: NgxSpinnerService
+    private _spinner: NgxSpinnerService,
+    private _alertaService: AlertaService
   ){}
 
   loginForm = this._formBuilder.group({
@@ -46,25 +48,22 @@ export class LoginComponent implements OnInit {
     this.iniciarAnimacion();
     this._auth.login(this.loginForm.value as LoginRequest).subscribe({
       next: (data: LoginResponse) => {
+        this.finalizarAnimacion();
         this._sesionUsuario.almacenarDatosLoginStorage(data);
         this._router.navigateByUrl('');
       },
-      error: (errorData) => {
-        console.log(errorData);
-      },
-      complete: () => {
+      error: (errorData: any) => {
         this.finalizarAnimacion();
+        this._alertaService.mostrarMensajeError(errorData);
       }
     })
   }
 
   iniciarAnimacion(){
     this._spinner.show();
-    console.log('inicio animacion');
   }
 
   finalizarAnimacion(){
     this._spinner.hide();
-    console.log('finalizo animacion');
   }
 }

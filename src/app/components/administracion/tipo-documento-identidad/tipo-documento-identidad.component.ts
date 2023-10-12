@@ -30,6 +30,7 @@ export class TipoDocumentoIdentidadComponent implements OnInit {
   ngOnInit(): void {
     this.usuario = this._sesionService.setUsuario();
     this.obtenerTiposDocumentoIdentidad();
+    this.cancelar();
   }
 
   tipoDocumentoIdentidadform = this._formBuilder.group({
@@ -46,6 +47,10 @@ export class TipoDocumentoIdentidadComponent implements OnInit {
 
   get codigo(){
     return this.tipoDocumentoIdentidadform.controls['codigo'];
+  }
+
+  get descripcion(){
+    return this.tipoDocumentoIdentidadform.controls['descripcion'];
   }
 
   obtenerTiposDocumentoIdentidad(){
@@ -145,11 +150,15 @@ export class TipoDocumentoIdentidadComponent implements OnInit {
   }
   
   habilitarControles(){
-    this.controles = true;
+    this.codigo.enable();
+    this.nombre.enable();
+    this.descripcion.enable();
   }
 
   deshabilitarControles(){
-    this.controles = false;
+    this.codigo.disable();
+    this.nombre.disable();
+    this.descripcion.disable();
   }
 
   nuevo(){
@@ -160,6 +169,11 @@ export class TipoDocumentoIdentidadComponent implements OnInit {
   editar(obj: TipoDocumentoIdentidad){
     this.setTipodocumentoIdentidad(obj);
     this.habilitarControles();
+  }
+
+  cancelar(){
+    this.resetForm();
+    this.deshabilitarControles();
   }
 
   async eliminar(obj: TipoDocumentoIdentidad){
